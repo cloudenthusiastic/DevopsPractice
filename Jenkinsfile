@@ -3,10 +3,10 @@
 pipeline {
     agent any
     stages{
-        stage{
+        stage ('Checkout'){
             steps{
                 script{
-                    checkout("https://github.com/cloudenthusiastic/DevopsPractice.git","main")
+		 helloWorld()
                 }
             }
         }
