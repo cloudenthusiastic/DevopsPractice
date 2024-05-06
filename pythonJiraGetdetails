@@ -1,1 +1,33 @@
+# This code sample uses the 'requests' library:
+# http://docs.python-requests.org
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+async def getJira(jiraNumber):
+    url = "https://teradata-pe.atlassian.net/rest/api/3/issue/{0}".format(jiraNumber)
+
+    auth = HTTPBasicAuth("EMAIL-ID", "API_TOKEN")
+
+    headers = {
+    "Accept": "application/json"
+    }
+
+    response = requests.request(
+    "GET",
+    url,
+    headers=headers,
+    auth=auth
+    )
+
+    datas= json.loads(response.text)
+    try:
+     datas['fields']['assignee']['displayName']
+     return ("JIRA CREATOR:",datas['fields']['reporter']['displayName']),("JIRA ASSIGNEE:",datas['fields']['assignee']['displayName']),("JIRA BOARD:",datas['fields']['project']["name"])
+    except TypeError as e:
+        return ("JIRA CREATOR:",datas['fields']['reporter']['displayName'] ,"JIRA ASSIGNEE: No Assignee","JIRA BOARD:",datas['fields']['project']["name"])
 
