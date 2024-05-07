@@ -31,3 +31,5 @@ async def getJira(jiraNumber):
     except TypeError as e:
         return ("JIRA CREATOR:",datas['fields']['reporter']['displayName'] ,"JIRA ASSIGNEE: No Assignee","JIRA BOARD:",datas['fields']['project']["name"])
 
+#pip install "uvicorn[standard]"
+#uvicorn main:app --host 0.0.0.0 --port 80
